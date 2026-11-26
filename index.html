@@ -68,7 +68,7 @@
       document.getElementById("record").hidden = false;
       document.getElementById("name").textContent = formatName(patient);
       document.getElementById("gender").textContent = patient.gender || "Not recorded";
-      document.getElementById("birth-date").textContent = patient.birthDate || "Not recorded";
+      document.getElementById("birth-date").textContent = formatBirthDate(patient.birthDate);
       document.getElementById("age").textContent = formatAge(patient.birthDate);
     }
 
@@ -108,7 +108,20 @@
         age -= 1;
       }
       return age + " years";
-    }
+    function formatBirthDate(birthDate) {
+  if (!birthDate) {
+    return "Not recorded";
+  }
+  var parts = birthDate.split("-");
+  var year = Number(parts[0]);
+  var month = Number(parts[1] || 1) - 1;
+  var day = Number(parts[2] || 1);
+  return new Date(year, month, day).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}}
   </script>
 </body>
 </html>
